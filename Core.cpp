@@ -33,6 +33,7 @@ void hBuildItems()
 		hMenu->AddItem((char*)("God Mode"), &hMenuItem[5], (char**)(hOpt), 2);
 		hMenu->AddItem((char*)("No Gravity"), &hMenuItem[6], (char**)(hOpt), 2);
 		hMenu->AddItem((char*)("No Clip"), &hMenuItem[7], (char**)(hOpt), 2);
+		hMenu->AddItem((char*)("TP2WP -> Numpad 1"), &hMenuItem[8], (char**)(hOpt), 2);
 	}
 
 	hMenu->AddGroup((char*)("[ Settings ]"), &hMenuFolder[3], (char**)(hFld), 2);

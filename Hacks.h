@@ -373,4 +373,20 @@ void hBuildHacks(IDirect3DDevice9* pDevice)
 	else {
 		//Off
 	}
+
+	if (hMenuItem[8]) {
+		//On
+		if (GetAsyncKeyState(VK_NUMPAD1)) {
+			Axis = zAxisptr + 0xE0;
+			Vector3 WP = *(Vector3*)0x01B40298;//WaypointPtr
+			WP /= 70;
+			if (WP != lastTpPos) {
+				*(Vector3*)Axis = WP;
+				lastTpPos = WP;
+			}
+		}
+	}
+	else {
+		//Of
+	}
 }

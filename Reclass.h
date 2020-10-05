@@ -22,6 +22,7 @@ DWORD LoadingScreen;
 DWORD noclipJmpBack;
 DWORD Axis;
 DWORD zAxisptr;
+Vector3 lastTpPos;
 
 float Matrix[16];
 
