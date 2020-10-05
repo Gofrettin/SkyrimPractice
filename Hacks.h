@@ -129,18 +129,18 @@ Vector2 RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle, boo
 	return returnVec;
 }
 
-Vector2 ScaleToRadar(playerent* entity, playerent* localPlayer, Vector2 localPlayerViewAngles , int radarx, int radary, int radarw, int radarh)
+Vector2 ScaleToRadar(playerent* entity, playerent* localPlayer, Vector2 localPlayerViewAngles, int radarx, int radary, int radarw, int radarh, float radarDistance)
 {
 	Vector2 radarCentre((radarx + radarw / 2) - 2, (radary + radarh / 2) - 2);
 	Vector2 enemyPos2D(entity->coords[0], entity->coords[1]);
 	Vector2 localPos2D(localPlayer->coords[0], localPlayer->coords[1]);
 	Vector2 screenPos = localPos2D - enemyPos2D;
-	float distance = screenPos.get_length() * (0.02f);//Distance
+	float distance = screenPos.get_length() * (0.02f * radarDistance);//Distance
 	// distance = min(distance, m_x); circle radar
 	Vector2 screen = screenPos.normalized();
 	screen *= distance;
 	screen += radarCentre;
-	return RotatePoint(screen, radarCentre, -1*localPlayerViewAngles.at(1), false);
+	return RotatePoint(screen, radarCentre, -1 * localPlayerViewAngles.at(1), false);
 }
 
 //Cheats
@@ -275,7 +275,7 @@ void hBuildHacks(IDirect3DDevice9* pDevice)
 				}
 				if (ents[i]->nameptr->name != LocalPlayer->nameptr->name) {
 					Vector2 viewAngles(RAD2DEG(*(float*)(LocalPlayerPtr + 0x28)), RAD2DEG(*(float*)(LocalPlayerPtr + 0x30)));
-					Vector2 screenPos = ScaleToRadar(ents[i], LocalPlayer, viewAngles, radarDimensions[0], radarDimensions[1], radarDimensions[2], radarDimensions[3]);
+					Vector2 screenPos = ScaleToRadar(ents[i], LocalPlayer, viewAngles, radarDimensions[0], radarDimensions[1], radarDimensions[2], radarDimensions[3], 1.0f);
 					if (screenPos[0] > radarDimensions[0] && screenPos[0] < (radarDimensions[0] + radarDimensions[2] - 5) && screenPos[1] > radarDimensions[1] && screenPos[1] < radarDimensions[1] + radarDimensions[3] - 5)
 						hMenu->hDrawBox(screenPos[0] + 3, screenPos[1] + 3, 2, 2, hRed, pDevice);
 				}
