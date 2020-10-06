@@ -146,10 +146,10 @@ Vector2 ScaleToRadar(playerent* entity, playerent* localPlayer, Vector2 localPla
 //Cheats
 void hBuildHacks(IDirect3DDevice9* pDevice)
 {
+	D3DVIEWPORT9 viewPort;
+	pDevice->GetViewport(&viewPort);
 	if (hMenuItem[1])
 	{
-		D3DVIEWPORT9 viewPort;
-		pDevice->GetViewport(&viewPort);
 		float ScreenCenterX = viewPort.Width / 2 - 1;
 		float ScreenCenterY = viewPort.Height / 2 - 1;
 
@@ -187,8 +187,6 @@ void hBuildHacks(IDirect3DDevice9* pDevice)
 			}
 			*(DWORD*)LoadingScreen = 0;
 		}
-		D3DVIEWPORT9 viewPort;
-		pDevice->GetViewport(&viewPort);
 		memcpy(&Matrix, (PBYTE*)ViewMatrix, sizeof(Matrix));
 		for (int i = 0; i < 254; i++)
 		{
@@ -355,11 +353,11 @@ void hBuildHacks(IDirect3DDevice9* pDevice)
 		}
 		if (GetAsyncKeyState(VK_NUMPAD5))//UP
 		{
-			relPos[2] += 4.0f;
+			relPos[2] += 2.0f;
 		}
 		if (GetAsyncKeyState(VK_NUMPAD0))//DOWN
 		{
-			relPos[2] -= 4.0f;
+			relPos[2] -= 2.0f;
 		}
 		Vector3 newPos(
 			(*(float*)(ViewMatrix))* relPos[1] + (*(float*)(ViewMatrix + 0x10)) * relPos[2] + (*(float*)(ViewMatrix + 0x20)) * relPos[0],
