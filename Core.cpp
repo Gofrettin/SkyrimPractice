@@ -17,11 +17,9 @@ THIS CODE STILL NEEDS WORK :)
 Detour DetourEntityHook = Detour();
 Detour DetourNoclipHook = Detour();
 
-void hBuildItems()
-{
+void hBuildItems() {
 	hMenu->AddGroup((char*)("[ Visual ]"), &hMenuFolder[1], (char**)(hFld), 2);
-	if (hMenuFolder[1])
-	{
+	if (hMenuFolder[1]) {
 		hMenu->AddItem((char*)("CrossHair"), &hMenuItem[1], (char**)(hOpt), 2);
 		hMenu->AddItem((char*)("ESP"), &hMenuItem[2], (char**)(hOpt), 2);
 		hMenu->AddItem((char*)("Radar"), &hMenuItem[3], (char**)(hOpt), 2);
@@ -37,8 +35,7 @@ void hBuildItems()
 	}
 
 	hMenu->AddGroup((char*)("[ Settings ]"), &hMenuFolder[3], (char**)(hFld), 2);
-	if (hMenuFolder[3])
-	{
+	if (hMenuFolder[3]) {
 		hMenu->AddItem((char*)("Mouse Control"), &hMenuSettings[2], (char**)(hOpt), 2);
 		hMenu->AddItem((char*)("Move Menu"), &hMenuSettings[3], (char**)(hOpt), 2);
 		hMenu->AddItem((char*)("Reset"), &hMenuSettings[4], (char**)(hOpt), 2);
@@ -46,10 +43,8 @@ void hBuildItems()
 	}
 }
 
-void hBuildMenu(IDirect3DDevice9* pDevice)
-{
-	if (!hMenu)
-	{
+void hBuildMenu(IDirect3DDevice9* pDevice) {
+	if (!hMenu) {
 		hMenu = new hMenuCore((char*)("Skyrim"), 100, 155, 15);
 		hMenu->visible = 1;
 		hMenu->col_title = hWhite;
@@ -57,8 +52,7 @@ void hBuildMenu(IDirect3DDevice9* pDevice)
 	else {
 		if (!hMenu->noitems)
 			hBuildItems();
-		if (hMenu->visible == 1)
-		{
+		if (hMenu->visible == 1) {
 			//Title Box
 			hMenu->hDrawBox((int)hMenu->x - 7, (int)hMenu->y - 10, (int)hMenu->totwidth, (float)21, hTransparent, pDevice);
 			hMenu->hDrawRectangle((int)hMenu->x - 7, hMenu->y - 10, (int)hMenu->totwidth, (float)21, 1, hWhite, pDevice);
@@ -82,8 +76,7 @@ void hBuildMenu(IDirect3DDevice9* pDevice)
 HRESULT __stdcall userReset(IDirect3DDevice9* pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters) {
 	pFont->OnLostDevice();
 	HRESULT hTorna = oReset(pDevice, pPresentationParameters);
-	if (SUCCEEDED(hTorna))
-	{
+	if (SUCCEEDED(hTorna)) {
 		pFont->OnResetDevice();
 	}
 	return hTorna;
@@ -103,17 +96,16 @@ HRESULT __stdcall userEndScene(IDirect3DDevice9* pDevice) {
 }
 #pragma endregion
 
-void hThread()
-{
+void hThread() {
 #pragma region Vtable Hook
-	//PDWORD D3DVTable;
-	//do
-	//{
-	//	*(DWORD*)&D3DVTable = *(DWORD*)hD3D9VTable();
-	//} while (!D3DVTable);
-	//oReset = (tReset)DetourUtilReset.CreateDetour((void*)D3DVTable[16], (void*)userReset, 5, true);
-	//oPresent = (tPresent)DetourUtilPresent.CreateDetour((void*)D3DVTable[17], (void*)userPresent, 5, true);
-	//oEndScene = (tEndScene)DetourUtilEndScene.CreateDetour((void*)D3DVTable[42], (void*)userEndScene, 7, true);
+	/*PDWORD D3DVTable;
+	do
+	{
+		*(DWORD*)&D3DVTable = *(DWORD*)hD3D9VTable();
+	} while (!D3DVTable);
+	oReset = (tReset)DetourUtilReset.CreateDetour((void*)D3DVTable[D3DInformation::Reset_Index], (void*)userReset, 5, true);
+	oPresent = (tPresent)DetourUtilPresent.CreateDetour((void*)D3DVTable[D3DInformation::Present_Index], (void*)userPresent, 5, true);
+	oEndScene = (tEndScene)DetourUtilEndScene.CreateDetour((void*)D3DVTable[D3DInformation::EndScene_Index], (void*)userEndScene, 7, true);*/
 #pragma endregion
 
 #pragma region gameoverlay.dll Hook
@@ -125,7 +117,7 @@ void hThread()
 	**reinterpret_cast<void***>(presentAddr) = reinterpret_cast<void*>(&userPresent);
 	**reinterpret_cast<void***>(resetAddr) = reinterpret_cast<void*>(&userReset);
 #pragma endregion
-	
+
 	modInfo = GetModuleInfo(const_cast<char*>(PROCESS_NAME.c_str()));
 
 	DWORD entityAddy = (DWORD)find_signature("8B 56 34 8B 46 38 8B 4E 3C 8D 7E 34", (uint8_t*)modInfo.lpBaseOfDll, modInfo.SizeOfImage);
@@ -135,7 +127,7 @@ void hThread()
 	DWORD noclipAddy = (DWORD)find_signature("8B 52 78 D9 42 0C 8B 01", (uint8_t*)modInfo.lpBaseOfDll, modInfo.SizeOfImage);
 	noclipJmpBack = noclipAddy + 0x6;
 	DetourNoclipHook.CreateDetour((void*)noclipAddy, (void*)nocliphook, 6, true);
-	
+
 	LocalPlayerPtr = (DWORD)find_signature("1C 20 0D 01 00 00 00", (uint8_t*)0x12000000, (size_t)0xFFFFFF);
 	LocalPlayer = (playerent*)(LocalPlayerPtr);
 
@@ -148,10 +140,8 @@ void hThread()
 	DupePatch.CreatePatch(0x47F89F, (PBYTE)("\x01\x41\x08"), false);
 }
 
-void settingsThread(HMODULE hMod)
-{
-	for (;;)
-	{
+void settingsThread(HMODULE hMod) {
+	for (;;) {
 		hSettings();
 		Sleep(5);
 		if (menu_exit) {
@@ -179,11 +169,9 @@ void settingsThread(HMODULE hMod)
 	Sleep(20);
 }
 
-BOOL APIENTRY DllMain(HMODULE hMod, DWORD hReason, LPVOID hReserved)
-{
+BOOL APIENTRY DllMain(HMODULE hMod, DWORD hReason, LPVOID hReserved) {
 	DisableThreadLibraryCalls(hMod);
-	if (hReason == DLL_PROCESS_ATTACH)
-	{
+	if (hReason == DLL_PROCESS_ATTACH) {
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)hThread, hMod, 0, 0);
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)settingsThread, hMod, 0, 0);
 	}

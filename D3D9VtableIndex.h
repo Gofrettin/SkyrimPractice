@@ -1,6 +1,5 @@
 #pragma once
-class D3DInformation
-{
+class D3DInformation {
 public:
 	static const int Queryinterface_Index = 0;
 	static const int AddRef_Index = 1;

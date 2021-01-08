@@ -41,8 +41,7 @@
 #define hMText	  hWhite
 #define hMCurrent hOrange
 
-typedef struct
-{
+typedef struct {
 	int  typ;
 	char* txt;
 	char** opt;
@@ -50,11 +49,9 @@ typedef struct
 	int  maxval;
 }tMENU;
 
-class hMenuCore
-{
+class hMenuCore {
 public:
-	hMenuCore(char* Name = 0, int maxentries = 130, int maxwidth = 300, int maxheight = 15)
-	{
+	hMenuCore(char* Name = 0, int maxentries = 130, int maxwidth = 300, int maxheight = 15) {
 		title = Name;
 		maxitems = maxentries;
 		cur = noitems = visible = 0;

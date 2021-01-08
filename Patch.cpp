@@ -1,7 +1,6 @@
 #include "Patch.h"
 
-Patch::Patch()
-{
+Patch::Patch() {
 	this->Target = 0;
 	this->Length = 0;
 	this->Active = false;
@@ -10,13 +9,11 @@ Patch::Patch()
 	this->oldprotect = 0;
 }
 
-Patch::~Patch()
-{
+Patch::~Patch() {
 	this->Remove();
 }
 
-void Patch::CreatePatch(uintptr_t Target, BYTE* newBytes, bool Active)
-{
+void Patch::CreatePatch(uintptr_t Target, BYTE* newBytes, bool Active) {
 	this->Target = Target;
 	this->newBytes = newBytes;
 	this->Length = sizeof(newBytes);
@@ -25,8 +22,7 @@ void Patch::CreatePatch(uintptr_t Target, BYTE* newBytes, bool Active)
 		this->Activate();
 }
 
-bool Patch::Activate()
-{
+bool Patch::Activate() {
 	if (!this->Target || !this->oldBytes || !this->newBytes || !this->Length)
 		return false;
 	if (!this->Active) {
@@ -39,8 +35,7 @@ bool Patch::Activate()
 	return this->Active;
 }
 
-bool Patch::Deactivate()
-{
+bool Patch::Deactivate() {
 	if (!this->Target || !this->oldBytes || !this->newBytes || !this->Length)
 		return false;
 	if (this->Active) {
@@ -53,8 +48,7 @@ bool Patch::Deactivate()
 
 }
 
-bool Patch::Remove()
-{
+bool Patch::Remove() {
 	if (this->Deactivate()) {
 		this->Target = 0;
 		this->Length = 0;

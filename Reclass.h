@@ -39,8 +39,7 @@ class HealthPtr1Class;
 class HealthPtr2Class;
 class HealthPtr3Class;
 
-class playerent
-{
+class playerent {
 public:
 	char pad_0x0000[0x24]; //0x0000
 	nameptrClass* nameptr; //0x0024 
@@ -59,32 +58,28 @@ public:
 }; //Size=0x0440
 
 
-class HealthPtr1Class
-{
+class HealthPtr1Class {
 public:
 	char pad_0x0000[0x30]; //0x0000
 	HealthPtr2Class* HealthPtr2; //0x0030 
 
 }; //Size=0x0034
 
-class HealthPtr2Class
-{
+class HealthPtr2Class {
 public:
 	char pad_0x0000[0x30]; //0x0000
 	HealthPtr3Class* HealthPtr3; //0x0030 
 
 }; //Size=0x0034
 
-class HealthPtr3Class
-{
+class HealthPtr3Class {
 public:
 	char pad_0x0000[0x1C]; //0x0000
 	float Health; //0x001C 
 
 }; //Size=0x0020
 
-class nameptrClass
-{
+class nameptrClass {
 public:
 	char pad_0x0000[0x88]; //0x0000
 	char* name; //0x0088 
@@ -92,24 +87,21 @@ public:
 
 }; //Size=0x0404
 
-class boneptr1Class
-{
+class boneptr1Class {
 public:
 	char pad_0x0000[0x4]; //0x0000
 	boneptr2Class* boneptr2; //0x0004 
 
 }; //Size=0x0008
 
-class boneptr2Class
-{
+class boneptr2Class {
 public:
 	char pad_0x0000[0xC0]; //0x0000
 	boneptr3Class* boneptr3; //0x00C0 
 
 }; //Size=0x00C4
 
-class boneptr3Class
-{
+class boneptr3Class {
 public:
 	char pad_0x0000[0x74]; //0x0000
 	char* humanoidvalidation; //0x0074 
@@ -307,8 +299,7 @@ playerent* ents[255];
 playerent* entsptr;
 playerent* LocalPlayer;
 
-__declspec(naked) void nocliphook()
-{
+__declspec(naked) void nocliphook() {
 	__asm {
 		mov zAxisptr, esi
 		mov edx, [edx + 0x78]
@@ -322,8 +313,7 @@ __declspec(naked) void nocliphook()
 	}
 }
 
-__declspec(naked) void entityhook()
-{
+__declspec(naked) void entityhook() {
 	__asm {
 		mov edx, [esi + 0x34]
 		mov eax, [esi + 0x38]
@@ -336,32 +326,25 @@ __declspec(naked) void entityhook()
 		mov[entsptr], eax
 	}
 
-	if (entsptr == nullptr)
-	{
+	if (entsptr == nullptr) {
 		goto GIVE_UP;
 	}
 
 	alreadyThere = false;
 
-	for (ix = 0; ix < 254; ix++)
-	{
-		if (ents[ix] == entsptr)
-		{
+	for (ix = 0; ix < 254; ix++) {
+		if (ents[ix] == entsptr) {
 			alreadyThere = true;
 			break;
 		}
 	}
 
-	if (alreadyThere)
-	{
+	if (alreadyThere) {
 		goto GIVE_UP;
 	}
-	else
-	{
-		for (ix = 0; ix < 254; ix++)
-		{
-			if (ents[ix] == 0)
-			{
+	else {
+		for (ix = 0; ix < 254; ix++) {
+			if (ents[ix] == 0) {
 				ents[ix] = entsptr;
 				break;
 			}
