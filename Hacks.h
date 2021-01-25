@@ -121,6 +121,19 @@ Vector2 ScaleToRadar(playerent* entity, playerent* localPlayer, Vector2 localPla
 	return RotatePoint(screen, radarCentre, -1 * localPlayerViewAngles.at(1), false);
 }
 
+int FrameRate() {
+	static int iFps, iLastFps;
+	static float flLastTickCount, flTickCount;
+	flTickCount = clock() * 0.001f;
+	iFps++;
+	if ((flTickCount - flLastTickCount) >= 1.0f) {
+		flLastTickCount = flTickCount;
+		iLastFps = iFps;
+		iFps = 0;
+	}
+	return iLastFps;
+}
+
 //Cheats
 void hBuildHacks(IDirect3DDevice9* pDevice) {
 	D3DVIEWPORT9 viewPort;
@@ -199,7 +212,8 @@ void hBuildHacks(IDirect3DDevice9* pDevice) {
 		hMenu->hDrawBox(radarDimensions[0] + 2, radarDimensions[1] - (2 + titleBarOffset), radarDimensions[2] - 4, 1 + titleBarOffset, hTransparent, pDevice);//Title Box
 		hMenu->hDrawRectangle(radarDimensions[0] + 1, radarDimensions[1] - (3 + titleBarOffset), radarDimensions[2] - 2, 2 + titleBarOffset, 1, hWhite, pDevice);//White Border
 		//hMenu->DrawTextShadow((CHAR*)("Radar - Player: " + AddrToHexString(LocalPlayerPtr)).c_str(), radarDimensions[0] + 2, radarDimensions[1] - (3 + titleBarOffset), D3DCOLOR_RGBA(255, 255, 255, 255), pFont);//Old Title Text
-		hMenu->DrawTextShadow((CHAR*)("Radar"), radarDimensions[0] + 2, radarDimensions[1] - (3 + titleBarOffset), D3DCOLOR_RGBA(255, 255, 255, 255), pFont);//Title Text
+		std::string frameRate = "Radar-FrameRate:" + std::to_string(FrameRate());
+		hMenu->DrawTextShadow((CHAR*)(frameRate.c_str()), radarDimensions[0] + 2, radarDimensions[1] - (3 + titleBarOffset), D3DCOLOR_RGBA(255, 255, 255, 255), pFont);//Title Text
 		hMenu->hDrawBox(radarDimensions[0] + 1, radarDimensions[1] + 1, radarDimensions[2] - 1, radarDimensions[3] - 1, hTransparent, pDevice);//Radar Body Box
 		hMenu->hDrawRectangle(radarDimensions[0] + 1, radarDimensions[1] + 1, radarDimensions[2] - 2, radarDimensions[3] - 2, 1, hWhite, pDevice);//Radar Border Box
 		hMenu->hDrawRectangle(radarDimensions[0] + 1, radarDimensions[1] + 1 + (radarDimensions[3] / 2), radarDimensions[2] - 2, 0, 1, hWhite, pDevice);//x Axis
