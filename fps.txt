@@ -1,0 +1,12 @@
+int CRender::FrameRate() {
+	static int iFps, iLastFps;
+	static float flLastTickCount, flTickCount;
+	flTickCount = clock() * 0.001f;
+	iFps++;
+	if ((flTickCount - flLastTickCount) >= 1.0f) {
+		flLastTickCount = flTickCount;
+		iLastFps = iFps;
+		iFps = 0;
+	}
+	return iLastFps;
+}
