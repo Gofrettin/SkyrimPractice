@@ -1,1 +1,1 @@
-C:\Users\Cavit Berkay YILMAZ\source\repos\SkyrimInternalHack\Release\SkyrimInternalHack.dll
+C:\Users\cby\source\repos\SkyrimPractice-master\Release\SkyrimInternalHack.dll

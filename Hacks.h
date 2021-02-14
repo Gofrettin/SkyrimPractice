@@ -134,6 +134,23 @@ int FrameRate() {
 	return iLastFps;
 }
 
+int GetHeightInPixels() {
+	TEXTMETRICA txtmet;
+	pFont->GetTextMetrics(&txtmet);
+	return  txtmet.tmHeight;
+}
+
+int GetLengthInPixels(LPCSTR TextToDraw) {
+	TEXTMETRICA txtmet;
+	pFont->GetTextMetrics(&txtmet);
+	int size = 0;
+	for (int i = 0; TextToDraw[i] != '\0'; i++) {
+		size++;
+	}
+	//return size * (txtmet.tmAveCharWidth + 1);
+	return size * (txtmet.tmAveCharWidth - 1);
+}
+
 //Cheats
 void hBuildHacks(IDirect3DDevice9* pDevice) {
 	D3DVIEWPORT9 viewPort;
@@ -182,7 +199,7 @@ void hBuildHacks(IDirect3DDevice9* pDevice) {
 				if (WorldToScreen(ents[i]->coords, vScreen, Matrix, viewPort.Width, viewPort.Height)) {
 					if (ents[i] != 0) {
 						std::string espString = std::string(ents[i]->nameptr->name) + "[" + std::to_string((int)(LocalPlayer->coords.get_distance((ents[i]->coords)) / 100)) + "m]";
-						hMenu->DrawTextShadow((CHAR*)espString.c_str(), vScreen[0], vScreen[1], Rainbow(255), pFont);
+						hMenu->DrawTextShadow((CHAR*)espString.c_str(), vScreen[0] - (GetLengthInPixels(espString.c_str()) / 2), vScreen[1], Rainbow(255), pFont);
 					}
 				}
 			}

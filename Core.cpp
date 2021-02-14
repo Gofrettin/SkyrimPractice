@@ -11,9 +11,9 @@ THIS CODE STILL NEEDS WORK :)
 
 */
 
-//Detour DetourUtilReset = Detour();
-//Detour DetourUtilPresent = Detour();
-//Detour DetourUtilEndScene = Detour();
+Detour DetourUtilReset = Detour();
+Detour DetourUtilPresent = Detour();
+Detour DetourUtilEndScene = Detour();
 Detour DetourEntityHook = Detour();
 Detour DetourNoclipHook = Detour();
 
@@ -98,24 +98,24 @@ HRESULT __stdcall userEndScene(IDirect3DDevice9* pDevice) {
 
 void hThread() {
 #pragma region Vtable Hook
-	/*PDWORD D3DVTable;
+	PDWORD D3DVTable;
 	do
 	{
 		*(DWORD*)&D3DVTable = *(DWORD*)hD3D9VTable();
 	} while (!D3DVTable);
 	oReset = (tReset)DetourUtilReset.CreateDetour((void*)D3DVTable[D3DInformation::Reset_Index], (void*)userReset, 5, true);
 	oPresent = (tPresent)DetourUtilPresent.CreateDetour((void*)D3DVTable[D3DInformation::Present_Index], (void*)userPresent, 5, true);
-	oEndScene = (tEndScene)DetourUtilEndScene.CreateDetour((void*)D3DVTable[D3DInformation::EndScene_Index], (void*)userEndScene, 7, true);*/
+	oEndScene = (tEndScene)DetourUtilEndScene.CreateDetour((void*)D3DVTable[D3DInformation::EndScene_Index], (void*)userEndScene, 7, true);
 #pragma endregion
 
 #pragma region gameoverlay.dll Hook
-	MODULEINFO gameOverlayInfo = GetModuleInfo("gameoverlayrenderer.dll");
+	/*MODULEINFO gameOverlayInfo = GetModuleInfo("gameoverlayrenderer.dll");
 	presentAddr = ((uintptr_t)find_signature("FF 15 ? ? ? ? 8B F8 85 DB", (uint8_t*)gameOverlayInfo.lpBaseOfDll, gameOverlayInfo.SizeOfImage)) + 2;
 	resetAddr = ((uintptr_t)find_signature("FF 15 ? ? ? ? 8B F8 85 FF 78 18", (uint8_t*)gameOverlayInfo.lpBaseOfDll, gameOverlayInfo.SizeOfImage)) + 2;
 	oPresent = **reinterpret_cast<decltype(&oPresent)*>(presentAddr);
 	oReset = **reinterpret_cast<decltype(&oReset)*>(resetAddr);
 	**reinterpret_cast<void***>(presentAddr) = reinterpret_cast<void*>(&userPresent);
-	**reinterpret_cast<void***>(resetAddr) = reinterpret_cast<void*>(&userReset);
+	**reinterpret_cast<void***>(resetAddr) = reinterpret_cast<void*>(&userReset);*/
 #pragma endregion
 
 	modInfo = GetModuleInfo(const_cast<char*>(PROCESS_NAME.c_str()));
@@ -147,14 +147,14 @@ void settingsThread(HMODULE hMod) {
 		if (menu_exit) {
 
 #pragma region Vtable unhook
-			//DetourUtilReset.Remove();
-			//DetourUtilPresent.Remove();
-			//DetourUtilEndScene.Remove();
+			DetourUtilReset.Remove();
+			DetourUtilPresent.Remove();
+			DetourUtilEndScene.Remove();
 #pragma endregion
 
 #pragma region gameoverlay.dll unhook
-			** reinterpret_cast<void***>(presentAddr) = *reinterpret_cast<void**>(&oPresent);
-			**reinterpret_cast<void***>(resetAddr) = *reinterpret_cast<void**>(&oReset);
+			//** reinterpret_cast<void***>(presentAddr) = *reinterpret_cast<void**>(&oPresent);
+			//**reinterpret_cast<void***>(resetAddr) = *reinterpret_cast<void**>(&oReset);
 #pragma endregion
 
 			DetourEntityHook.Remove();
