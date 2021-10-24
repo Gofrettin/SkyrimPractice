@@ -4,6 +4,7 @@
 #include "Patch.h"
 #include "Vector.h"
 #include "Reclass.h"
+#include <numbers>
 
 #define M_PI		3.14159265358979323846264338327950288
 #define M_RADPI		57.295779513082f
@@ -83,14 +84,13 @@ bool WorldToScreen(Vector3 pos, Vector2& screen, float matrix[16], int windowWid
 }
 
 D3DXCOLOR Rainbow(float alpha) {
-	float freq = .001f;
 	static uint32_t cnt = 0;
+	float freq = .0005f;
 	D3DXCOLOR color = D3DXCOLOR(
-		(std::sin(freq * cnt + 0) * 127 + 128) / 255.f,//R
-		(std::sin(freq * cnt + 2) * 127 + 128) / 255.f,//G
-		(std::sin(freq * cnt + 4) * 127 + 128) / 255.f,//B
-		alpha);//A
-	// Probably redundant
+		(std::sin(freq * cnt + 0) * 127.f + 128.f) / 255.f,//R
+		(std::sin(freq * cnt + 2) * 127.f + 128.f) / 255.f,//G
+		(std::sin(freq * cnt + 4) * 127.f + 128.f) / 255.f,//B
+		alpha);
 	if (cnt++ >= (uint32_t)-1) cnt = 0;
 	return color;
 }

@@ -1,2 +1,7 @@
 ﻿  Core.cpp
+  Detour.cpp
+  Menu.cpp
+  Patch.cpp
+  Generating Code...
+  LINK : C:\Users\Cavit Berkay Yılmaz\source\repos\SkyrimPractice-master\Debug\SkyrimInternalHack.dll not found or not built by the last incremental link; performing full link
   SkyrimInternalHack.vcxproj -> C:\Users\Cavit Berkay Yılmaz\source\repos\SkyrimPractice-master\Debug\SkyrimInternalHack.dll
