@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30503.244
+VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SkyrimInternalHack", "SkyrimInternalHack.vcxproj", "{231F74E0-1A78-465E-AD43-9E607A204C0B}"
 EndProject
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B227F546-1F6B-47FA-B38C-7E0BC03E2577}
+		SolutionGuid = {ACE6B87F-BFBE-4B8B-B4E5-19FD642B3550}
 	EndGlobalSection
 EndGlobal
